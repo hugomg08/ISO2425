@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 #
 #Autor:Hugo Masero Gómez
 #Fecha:17-02-2025
@@ -87,5 +87,5 @@ echo "La ruta del archivo de salida es $(realpath $arch_sal)"
 
 echo "Mostrando contenido del archivo"
 
-cat "~arch_sal"
+cat "$arch_sal"
 		

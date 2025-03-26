@@ -1,6 +1,9 @@
 """
+#Nombre:infoUsers.py
 #Autor:Hugo Masero Gómez
 #Fecha:26-03-2025
+#Descripción:Este script proporciona un menú con cuatro opciones para administrar el sistema. Antes de ejecutarse, verifica que el usuario sea **root**. Tendrá opciones como mostrar información del sistema y la CPU,  
+verificar si un usuario existe, etc   
 """
 
 import os

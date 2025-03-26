@@ -1,3 +1,8 @@
+"""
+#Autor:Hugo Masero Gómez
+#Fecha:26-03-2025
+"""
+
 import os
 import cpuinfo as cpu
 

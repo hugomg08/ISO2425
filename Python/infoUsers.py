@@ -22,7 +22,7 @@ if os.getuid()==0:
                     enc=0
 
                     for i in contenido:
-                        if user in i:
+                        if i.split(":")[0] == user:
                             enc=1
                             final=i
                             break

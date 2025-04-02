@@ -1,55 +1,82 @@
 """
-#Nonmbre:dirFile.py
-#Autor:Hugo Masero Gómez
-#Fecha:26-03-2025
-#Descripción:Este script calisifica el contenido en rutas y diretcorios, luego los mete en listas. Tras ello iniciarrá un menú
-en el que dependiendo de las opciones podrás eliminar archivos, ver información de directorios, etc
+# Nombre: dirFile.py
+# Autor: Hugo Masero Gómez
+# Fecha: 26-03-2025
+# Descripción: Este script clasifica el contenido en ficheros y directorios desde un archivo 'rutas.txt',
+# almacenándolos en listas separadas. Luego, muestra un menú con opciones para gestionar estos archivos.
 """
-import shutil
 
+import shutil
 import os
 
-list_ficheros=[]
-list_directorios=[]
+list_ficheros = []
+list_directorios = []
 
-fich1=open("rutas.txt","r")
+with open("rutas.txt", "r") as fich1:
+    contenido = fich1.readlines()
+    
+ for ruta in contenido:
+    r = ruta.strip() 
+ if os.path.isfile(r):
+    list_ficheros.append(r)
+  elif os.path.isdir(r):
+    list_directorios.append(r)
 
-contenido=fich1.readlines()
+print("Carpetas:", list_directorios)
+print("Ficheros:", list_ficheros)
 
-for i in contenido:
-    r=i.strip()
-    if os.path.isfile(r):
-        list_ficheros.append(r)
-    elif os.path.isdir(r):
-        list_directorios.append(r)
+while True:
+    print("A - Eliminar un fichero")
+    print("B - Mostrar información de un directorio")
+    print("C - Copiar un fichero a un destino")
+    print("D - Mostrar listas de ficheros o directorios")
+    print("E - Salir")
 
-print("Carpetas",list_directorios)
-print("Ficheros",list_ficheros)
+    opcion = input("Escoja una opción de A - E: ").strip().upper()
 
-menu = int(input("Escoga una opción de la A - E "))
+    match opcion:
+        case "A":
+            fich = input("Escriba el nombre de un fichero: ").strip()
+            if fich in list_ficheros:
+                os.remove(fich)
+                list_ficheros.remove(fich)
+                print("Archivo eliminado correctamente.")
+            else:
+                print("Error: El fichero no existe.")
 
-match menu:
+        case "B":
+            dire = input("Escriba el nombre de un directorio: ").strip()
+            if dire in list_directorios:
+                print(f"Contenido de {dire}:")
+                os.system(f"ls {dire}")
+            else:
+                print("Error: El directorio no existe.")
 
-    case "A":
-        fich=input("Escriba el nombre de un fichero ")
-        os.system("rm -r"+fich)
-        print("Archivo eliminado correctamente")
+        case "C":
+            fichero = input("Escriba el nombre de un fichero: ").strip()
+            destino = input("Escriba el destino: ").strip()
+            if fichero in list_ficheros:
+                if os.path.exists(destino):  
+                    shutil.copy(fichero, destino)
+                    print("Fichero copiado con éxito.")
+                else:
+                    print("Error: El destino no existe.")
+            else:
+                print("Error: El fichero no existe.")
 
-    case "B":
-        dire=input("Escriba el nombre de un directorio ")
-        show_content=os.system("ls"+dire)
-        print(show_content)
+        case "D":
+            tipo_lista = input("¿Qué desea ver? (F para ficheros o D para directorios): ").strip().upper()
+            if tipo_lista == "F":
+                print("Lista de ficheros:", list_ficheros)
+            elif tipo_lista == "D":
+                print("Lista de directorios:", list_directorios)
+            else:
+                print("Opción no válida.")
 
-    case "C":
-        fichero=input("Escriba el nombre de un fichero ")
-        destino=input("Escriba el nombre del destino ")
+        case "E":
+            print("Saliendo del programa...")
+            break
 
-        shutil.copy(fichero,destino)
-        print("Copiado con éxito")
+        case _:
+            print("ERROR")
 
-    case "D":
-
-    case "E":
-        print("Has escogido salir")
-    case _:
-        print("ERROR")
